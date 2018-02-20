@@ -3,6 +3,7 @@ import streams
 import strutils
 import menu_button
 import menu_label
+import custom_editor
 
 app.init()
 
@@ -22,8 +23,7 @@ var fileName = newMenuLabel("")
 fileName.height = 25
 mainContainer.add(fileName)
 
-var textArea = newTextArea()
-textArea.backgroundColor = rgb(23, 25, 33)
+var textArea = newCustomEditor()
 mainContainer.add(textArea)
 
 var newFileBtn = newMenuButton("New File")

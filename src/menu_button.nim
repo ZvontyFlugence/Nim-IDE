@@ -3,7 +3,7 @@ import nigui
 type MenuButton* = ref object of Button
 
 proc newMenuButton*(text = ""): MenuButton =
-    result  = new MenuButton
+    result = new MenuButton
     result.init()
     result.text = text
 
