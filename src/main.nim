@@ -18,9 +18,8 @@ var menuContainer = newLayoutContainer(Layout_Horizontal)
 menuContainer.backgroundColor = rgb(23, 25, 33)
 mainContainer.add(menuContainer)
 
-var fileName = newMenuLabel()
-fileName.width = 100
-fileName.height = 20
+var fileName = newMenuLabel("")
+fileName.height = 25
 mainContainer.add(fileName)
 
 var textArea = newTextArea()
@@ -32,6 +31,7 @@ menuContainer.add(newFileBtn)
 newFileBtn.onClick = proc(event: ClickEvent) =
     textArea.text = ""
     fileName.text= "New File" 
+    fileName.width = len(fileName.text) * 10
 
 var openFileBtn = newMenuButton("Open File")
 menuContainer.add(openFileBtn)
@@ -53,6 +53,7 @@ openFileBtn.onClick = proc(event: ClickEvent) =
             textArea.text = fileContent            
             var pathParts = split(dialog.files[0], "\\")            
             fileName.text= pathParts[len(pathParts)-1]
+            fileName.width = len(fileName.text) * 10
     except IndexError:       
         window.alert("Error: Invalid file!")
 
