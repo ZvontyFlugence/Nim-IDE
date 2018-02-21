@@ -1,9 +1,12 @@
 import nigui
+import nigui/msgbox
+import sets
 import streams
 import strutils
 import menu_button
 import menu_label
 import custom_editor
+import cmd
 
 # Initialize NiGui App
 app.init()
@@ -34,7 +37,7 @@ editorContainer.backgroundColor = rgb(23, 25, 33)
 mainContainer.add(editorContainer)
 
 # Create new custom editor
-var editor = newCustomEditor()
+var editor = newTextArea()
 editorContainer.add(editor)
 
 # Create btn to create a new file
@@ -92,6 +95,27 @@ saveFileBtn.onClick = proc(event: ClickEvent) =
         writeFile(dialog.file, editor.text)    
     except:        
         window.alert("Error: Save failed!")
+
+# Function with cmd logic for nim compile+run command
+# TODO: Fix everything related to running file in cmd
+#[proc nimCommand(ctx: var CmdPrompt, input: seq[string]): void =
+    echo(strutils.join(input, " "))]#
+
+# Create Run btn to run application (only works if file is a nim file)
+#[var runFileBtn = newMenuButton("Run")
+menuContainer.add(runFileBtn)
+runFileBtn.onClick = proc(event: ClickEvent) = 
+    let foo = cmd.Command(name: "nim", help: "compile nim files", exeCmd: nimCommand)
+    var my_commands: HashSet[Command] = [foo].toSet
+    var prompt = CmdPrompt(commands: my_commands, promptString: "> ")
+    prompt.run()]#
+
+# Handle app close confirmation
+window.onCloseClick = proc(event: CloseClickEvent) =
+    case window.msgBox("Do you want to quit?", "Quit?", "Quit", "Minimize", "Cancel")
+    of 1: window.dispose()
+    of 2: window.minimize()
+    else: discard
 
 # Display window on application start        
 window.show()
