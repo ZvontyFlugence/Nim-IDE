@@ -1,11 +1,11 @@
 import nigui
 import nigui/msgbox
+import nigui/editor
 import sets
 import streams
 import strutils
 import menu_button
 import menu_label
-import custom_editor
 import cmd
 
 # Initialize NiGui App
@@ -37,19 +37,19 @@ editorContainer.backgroundColor = rgb(23, 25, 33)
 mainContainer.add(editorContainer)
 
 # Create new custom editor
-var editor = newCustomEditor()
-editorContainer.add(editor)
+var textEditor = newEditor(window)
+editorContainer.add(textEditor)
 
 # Create btn to create a new file
 var newFileBtn = newMenuButton("New File")
 menuContainer.add(newFileBtn)
 newFileBtn.onClick = proc(event: ClickEvent) =
-    editor.text = ""
+    textEditor.text = ""
     fileName.text= "New File"
     # Dynamically set label width to fit any size filename
     fileName.width = len(fileName.text) * 10
     # Refresh after loading a file
-    editor.forceRedraw()
+    textEditor.forceRedraw()
 
 # Create btn to open a file from local storage
 var openFileBtn = newMenuButton("Open File")
@@ -72,14 +72,14 @@ openFileBtn.onClick = proc(event: ClickEvent) =
                 add(fileContent, line)
             fs.close()  
             # Update editor with file contents
-            editor.text = fileContent
+            textEditor.text = fileContent
             # Get file name from file path
             var pathParts = split(dialog.files[0], "\\")
             fileName.text= pathParts[len(pathParts)-1]
             # Dynamically set label width to fit any size filename
             fileName.width = len(fileName.text) * 10
             # Refresh after loading a file
-            editor.forceRedraw()
+            textEditor.forceRedraw()
     except IndexError:       
         window.alert("Error: Invalid file!")
 
@@ -92,7 +92,7 @@ saveFileBtn.onClick = proc(event: ClickEvent) =
     dialog.directory = "/test"
     dialog.run()
     try:
-        writeFile(dialog.file, editor.text)    
+        writeFile(dialog.file, textEditor.text)    
     except:        
         window.alert("Error: Save failed!")
 
@@ -118,8 +118,8 @@ window.onCloseClick = proc(event: CloseClickEvent) =
     else: discard
 
 # Handle Text Change
-editor.onTextChange = proc(event: TextChangeEvent) =
-    editor.forceRedraw()
+textEditor.onTextChange = proc(event: TextChangeEvent) =
+    textEditor.forceRedraw()
 
 # Display window on application start        
 window.show()
