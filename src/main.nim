@@ -37,7 +37,7 @@ editorContainer.backgroundColor = rgb(23, 25, 33)
 mainContainer.add(editorContainer)
 
 # Create new custom editor
-var editor = newTextArea()
+var editor = newCustomEditor()
 editorContainer.add(editor)
 
 # Create btn to create a new file
@@ -116,6 +116,10 @@ window.onCloseClick = proc(event: CloseClickEvent) =
     of 1: window.dispose()
     of 2: window.minimize()
     else: discard
+
+# Handle Text Change
+editor.onTextChange = proc(event: TextChangeEvent) =
+    editor.forceRedraw()
 
 # Display window on application start        
 window.show()
