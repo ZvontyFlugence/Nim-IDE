@@ -6,7 +6,6 @@ import streams
 import strutils
 import menu_button
 import menu_label
-import cmd
 
 # Initialize NiGui App
 app.init()
