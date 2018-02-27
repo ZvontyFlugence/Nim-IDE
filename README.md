@@ -1,6 +1,6 @@
 # Nim-IDE
 Experimental Nim standalone IDE developed purely in Nim, using [NimGui](https://github.com/trustable-code/NiGui).
-However, many current features are dependent on my forked version of NiGui which contains custom modules, like Editor. I would recommend to use my version of [NiGui](https://github.com/ZvontyFlugence/NiGui), until my merge requests are accepted in the official version of NiGui.
+However, many current features are dependent on my forked version of NiGui which contains custom modules, like Editor. I would recommend using my version of [NiGui](https://github.com/ZvontyFlugence/NiGui), until my merge requests are accepted in the official version of NiGui.
 
 ## Current Features
 - Create New File
