@@ -105,19 +105,20 @@ runFileBtn.onClick = proc(event: ClickEvent) =
         dialog.run()
         try:
             writeFile(dialog.file, textEditor.text)
-            var path = split(dialog.file, "\\", -1)
-            var command = "nim c -r " & path[len(path)-1]
-            var res = execShellCmd(command)
-            if res != 0:
-                raise newException(Exception, "Error has occured!")
         except:
             window.alert("Error: Save failed!")
+        var path = split(dialog.file, "\\", -1)
+        fileName.text = path[len(path)-1]
+        var command = "nim c -r " & fileName.text
+        var res = execShellCmd(command)
+        if res != 0:
+            window.alert("Failed to Run File")
     else: 
         if fileExists(fileName.text):
             var command = "nim c -r " & fileName.text
             var res = execShellCmd(command)
             if res != 0:
-                raise newException(Exception, "Error has occurred!")
+                window.alert("Failed to Run File")
     
 
 # Handle app close confirmation
