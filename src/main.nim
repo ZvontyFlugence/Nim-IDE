@@ -6,6 +6,7 @@ import streams
 import strutils
 import menu_button
 import menu_label
+import os
 
 # Initialize NiGui App
 app.init()
@@ -88,30 +89,40 @@ menuContainer.add(saveFileBtn)
 saveFileBtn.onClick = proc(event: ClickEvent) =
     var dialog = newSaveFileDialog()
     dialog.title = "Save File"
-    dialog.directory = "/test"
     dialog.run()
     try:
         writeFile(dialog.file, textEditor.text)    
     except:        
-        window.alert("Error: Save failed!")
+        window.alert("Error: Save failed!")   
 
-# Function with cmd logic for nim compile+run command
-# TODO: Fix everything related to running file in cmd
-#[proc nimCommand(ctx: var CmdPrompt, input: seq[string]): void =
-    echo(strutils.join(input, " "))]#
-
-# Create Run btn to run application (only works if file is a nim file)
-#[var runFileBtn = newMenuButton("Run")
+var runFileBtn = newMenuButton("Run File")
 menuContainer.add(runFileBtn)
-runFileBtn.onClick = proc(event: ClickEvent) = 
-    let foo = cmd.Command(name: "nim", help: "compile nim files", exeCmd: nimCommand)
-    var my_commands: HashSet[Command] = [foo].toSet
-    var prompt = CmdPrompt(commands: my_commands, promptString: "> ")
-    prompt.run()]#
+runFileBtn.onClick = proc(event: ClickEvent) =
+    # Check if file has been saved
+    if fileName.text == "New File":
+        var dialog = newSaveFileDialog()
+        dialog.title = "Save File"
+        dialog.run()
+        try:
+            writeFile(dialog.file, textEditor.text)
+            var path = split(dialog.file, "\\", -1)
+            var command = "nim c -r " & path[len(path)-1]
+            var res = execShellCmd(command)
+            if res != 0:
+                raise newException(Exception, "Error has occured!")
+        except:
+            window.alert("Error: Save failed!")
+    else: 
+        if fileExists(fileName.text):
+            var command = "nim c -r " & fileName.text
+            var res = execShellCmd(command)
+            if res != 0:
+                raise newException(Exception, "Error has occurred!")
+    
 
 # Handle app close confirmation
 window.onCloseClick = proc(event: CloseClickEvent) =
-    case window.msgBox("Do you want to quit?", "Quit?", "Quit", "Minimize", "Cancel")
+    case window.msgBox("Are you sure you want to quit?", "Quit?", "Quit", "Minimize", "Cancel")
     of 1: window.dispose()
     of 2: window.minimize()
     else: discard
