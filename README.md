@@ -1,11 +1,11 @@
 # Nim-IDE
 Experimental Nim standalone IDE developed purely in Nim, using [NimGui](https://github.com/trustable-code/NiGui).
-However, many current features are dependent on my forked version of NiGui which contains custom modules, like Editor. I would recommend to use my version of [NiGui](https://github.com/ZvontyFlugence/NiGui), until my merge requests are accepted in the official version of NiGui. I would also like to note that this is an incomplete, experimental application that is still in its development phase, there are many features which have either not yet been implemented, or may not work. I would not recommend attempting to use this application for any practical uses in its current form.
+However, many current features are dependent on my forked version of NiGui which contains custom modules, like Editor. I would recommend using my version of [NiGui](https://github.com/ZvontyFlugence/NiGui), until my merge requests are accepted in the official version of NiGui.
 
 ## Current Features
 - Create New File
 - Open File
-- Edit File* (Currently, only certain keys are supported!)
+- Edit File
 - Save File
 
 ### How to Run
