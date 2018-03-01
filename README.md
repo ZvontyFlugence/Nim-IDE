@@ -7,6 +7,14 @@ However, many current features are dependent on my forked version of NiGui which
 - Open File
 - Edit File
 - Save File
+- Run File
+
+## Planned Features
+- Syntax Highlighting
+- Code Suggestions (nimsuggest)
+- Read console output into embedded console within editor
+- Add line numbers
+- Calculate and display cursor position
 
 ### How to Run
 - Go to my version of [NiGui](https://github.com/ZvontyFlugence/NiGui) and follow the manual installation instructions.
